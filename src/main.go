@@ -75,6 +75,13 @@ func main() {
 		os.Exit(1)
 	}
 
+	if len(bricksToExecute) == 0 {
+		err = fmt.Errorf("No bricks was found to need actions. Check the provided brick(s) and selectors (if any).")
+		fmt.Fprintln(os.Stderr, err)
+
+		os.Exit(3)
+	}
+
 	// executeAction
 	// if exargs.Args.action is in the list do that else use otherAction
 	if behaviour, ok := exaction.BehaviourMap[configuration.Action]; ok {
