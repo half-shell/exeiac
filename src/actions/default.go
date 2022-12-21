@@ -29,7 +29,15 @@ func PassthroughAction(
 	for i, b := range bricksToExecute {
 		report := ExecReport{Brick: b}
 
-		statusCode, err = b.Module.Exec(b, conf.Action, conf.OtherOptions, []string{})
+		// TODO(half-shell): Work around to avoid polluting conf's OtherOptions.
+		// Ideally, we would have a flexible way of providing a "non-interactive" flag
+		// to a module.
+		args := conf.OtherOptions
+		if !conf.Interactive {
+			args = append(args, "--non-interactive")
+		}
+
+		statusCode, err = b.Module.Exec(b, conf.Action, args, []string{})
 
 		if err != nil {
 			if actionNotImplementedError, isActionNotImplemented := err.(exinfra.ActionNotImplementedError); isActionNotImplemented {

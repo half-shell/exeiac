@@ -38,8 +38,15 @@ func Plan(
 			return 3, err
 		}
 
-		// lay and manage error
-		exitStatus, err := b.Module.Exec(b, "plan", conf.OtherOptions, envs)
+		// TODO(half-shell): Work around to avoid polluting conf's OtherOptions.
+		// Ideally, we would have a flexible way of providing a "non-interactive" flag
+		// to a module.
+		args := conf.OtherOptions
+		if !conf.Interactive {
+			args = append(args, "--non-interactive")
+		}
+
+		exitStatus, err := b.Module.Exec(b, "plan", args, envs)
 		if err != nil {
 			report.Error = err
 			report.Status = TAG_ERROR

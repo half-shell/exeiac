@@ -167,7 +167,7 @@ func FromArguments(args Arguments) (configuration Configuration, err error) {
 		Interactive:       (conf.Interactive && !args.NonInteractive) || args.Interactive,
 		Modules:           modules,
 		Rooms:             rooms,
-		OtherOptions:      other_options,
+		OtherOptions:      extools.Deduplicate(append(conf.OtherOptions, args.OtherOptions...)),
 	}
 
 	return
