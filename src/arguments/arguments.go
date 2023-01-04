@@ -14,12 +14,14 @@ type Arguments struct {
 	BricksNames       []string
 	BricksSpecifiers  []string
 	NonInteractive    bool
+	Interactive       bool
 	Format            string
 	Modules           map[string]string
 	OtherOptions      []string
 	Rooms             map[string]string
 	ConfigurationFile string
 	ShowUsage         bool
+	ListBricks        bool
 }
 
 func (a Arguments) String() string {

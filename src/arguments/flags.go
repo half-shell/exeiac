@@ -19,6 +19,9 @@ Includes: %v`, AvailableBricksSpecifiers))
 	flag.BoolVarP(&Args.NonInteractive, "non-interactive", "I", false,
 		"Allows for exeiac to run without user input")
 
+	flag.BoolVarP(&Args.Interactive, "interactive", "i", false,
+		"Forces exeiac to wait for user input when needed. Overwrites the --non-interactive (-I) flag.")
+
 	flag.StringVarP(&Args.Format, "format", "f", "all",
 		fmt.Sprintf(`Define the format of the output. It matches the brick's specifiers values
 Includes: %v`, AvailableBricksFormat))
@@ -44,6 +47,8 @@ to it. Flag with arguments need to be enclosed in double quotes
 (e.g. -o "--myflag myargument",-b)`)
 
 	flag.BoolVarP(&Args.ShowUsage, "help", "h", false, "Show exeiac's help")
+
+	flag.BoolVarP(&Args.ListBricks, "list-bricks", "l", false, "List all the bricks from all rooms")
 
 	flag.Usage = func() {
 		fmt.Println("Usage: exeiac ACTION (BRICK_PATH|BRICK_NAME) [OPTION...]")

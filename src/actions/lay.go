@@ -63,8 +63,15 @@ func Lay(
 			return 3, err
 		}
 
-		// lay and manage error
-		exitStatus, err := b.Module.Exec(b, "lay", conf.OtherOptions, envs)
+		// TODO(half-shell): Work around to avoid polluting conf's OtherOptions.
+		// Ideally, we would have a flexible way of providing a "non-interactive" flag
+		// to a module.
+		args := conf.OtherOptions
+		if !conf.Interactive {
+			args = append(args, "--non-interactive")
+		}
+
+		exitStatus, err := b.Module.Exec(b, "lay", args, envs)
 		if err != nil {
 			skipFollowing = true
 			report.Error = err
